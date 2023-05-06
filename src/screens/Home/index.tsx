@@ -1,18 +1,71 @@
-import React, { useEffect } from 'react'
-import { View, Text, Button, SafeAreaView, Pressable, TextInput } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, Button, SafeAreaView, Pressable, TextInput, FlatList } from 'react-native'
 import { useAuth } from '../../ContextApi/authProvider';
-import ShoppingItem from '../../components/ShoppingItem';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from './styles';
+import  {addDoc, collection, db, getDocs} from '../../config/Firebase/index'
+import ShoppingItem from '../../components/ShoppingItem';
+
+interface ShoppingItem {
+  id: string;
+  user: string;
+  email: string;
+  photo: string;
+  listItem: {
+    item: string;
+    isChecked: boolean;
+  };
+}
 
 const Home = ({navigation}: any) => {
   const { user, logout } = useAuth();
+  const [item, setItem] = useState("");
+  const [shoppingList, setShoppingList] = useState<ShoppingItem[]>([]);
 
   useEffect(() => {
     if (user === null) {
       navigation.navigate('Login');
     }
   }, [user, navigation]);
+
+  const addItem = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "shopping"), {
+        user: user?.name,
+        email: user?.email,
+        photo: user?.picture,
+        listItem: {
+          item: item,
+          isChecked: false
+        }
+      });
+      setItem("");
+      getShoppingList();
+      //console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+
+  const getShoppingList = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "shopping"));
+      const shoppingListData: any = [];
+      querySnapshot.forEach((doc) => {
+        shoppingListData.push({
+          ...doc.data(),
+          id: doc.id
+        });
+      });
+      setShoppingList(shoppingListData);
+    } catch (error) {
+      console.log("Error fetching shopping list data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    getShoppingList();
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,12 +79,19 @@ const Home = ({navigation}: any) => {
           <MaterialIcons name="delete" size={30} color="black" />
         </Pressable>
       </View>
-      <ShoppingItem />
-      <ShoppingItem />
-      <ShoppingItem />
 
-      <TextInput 
+      <FlatList 
+        data={shoppingList}
+        renderItem={({ item }) => <ShoppingItem item={item} />}
+        keyExtractor={(item) => item.id}
+      />
+
+
+      <TextInput
+        value={item}
+        onChangeText={(text) => (setItem(text))}
         style={styles.textInput}
+        onSubmitEditing={addItem}
         placeholder='Adicionar item'
       />
     </SafeAreaView>
