@@ -21,6 +21,14 @@ const styles = StyleSheet.create({
   numberitems: {
     fontSize: 30,
     marginRight: 10
+  },
+  textInput: {
+    backgroundColor: 'lightgray',
+    padding: 10,
+    width: '90%',
+    alignSelf: 'center',
+    borderRadius: 20,
+    fontSize: 17
   }
 })
 

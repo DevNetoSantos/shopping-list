@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, Button, SafeAreaView, Pressable } from 'react-native'
+import { View, Text, Button, SafeAreaView, Pressable, TextInput } from 'react-native'
 import { useAuth } from '../../ContextApi/authProvider';
 import ShoppingItem from '../../components/ShoppingItem';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -29,6 +29,11 @@ const Home = ({navigation}: any) => {
       <ShoppingItem />
       <ShoppingItem />
       <ShoppingItem />
+
+      <TextInput 
+        style={styles.textInput}
+        placeholder='Adicionar item'
+      />
     </SafeAreaView>
   )
 }
