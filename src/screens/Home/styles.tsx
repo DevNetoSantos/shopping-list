@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     marginTop: 50,
+    backgroundColor: '#fff'
   },
   header: {
     flexDirection: 'row',
@@ -12,13 +13,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '90%',
     alignSelf: 'center',
-    borderRadius: 10
+    borderRadius: 10,
+    marginBottom: 10
   },
   titleText: {
     flex: 1,
     fontSize: 30
   },
-  numberitems: {
+  numberItems: {
     fontSize: 30,
     marginRight: 10
   },
@@ -28,7 +30,9 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     borderRadius: 20,
-    fontSize: 17
+    fontSize: 17,
+    marginTop: 'auto',
+    marginBottom: 10
   }
 })
 

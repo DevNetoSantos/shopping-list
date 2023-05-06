@@ -20,7 +20,7 @@ const Home = ({navigation}: any) => {
         {/* Text Title */}
         <Text style={styles.titleText}>Lista de Compras</Text>
         {/* numberItems */}
-        <Text style={styles.numberitems}>3</Text>
+        <Text style={styles.numberItems}>3</Text>
         {/* delete items */}
         <Pressable>
           <MaterialIcons name="delete" size={30} color="black" />
