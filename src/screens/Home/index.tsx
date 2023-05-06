@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { View, Text, Button, SafeAreaView } from 'react-native'
+import { View, Text, Button, SafeAreaView, Pressable } from 'react-native'
 import { useAuth } from '../../ContextApi/authProvider';
 import ShoppingItem from '../../components/ShoppingItem';
+import { MaterialIcons } from '@expo/vector-icons';
 import styles from './styles';
 
 const Home = ({navigation}: any) => {
@@ -15,6 +16,18 @@ const Home = ({navigation}: any) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        {/* Text Title */}
+        <Text style={styles.titleText}>Lista de Compras</Text>
+        {/* numberItems */}
+        <Text style={styles.numberitems}>3</Text>
+        {/* delete items */}
+        <Pressable>
+          <MaterialIcons name="delete" size={30} color="black" />
+        </Pressable>
+      </View>
+      <ShoppingItem />
+      <ShoppingItem />
       <ShoppingItem />
     </SafeAreaView>
   )
