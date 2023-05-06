@@ -5,8 +5,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import styles from './styles';
 import  {addDoc, collection, db, getDocs} from '../../config/Firebase/index'
 import ShoppingItem from '../../components/ShoppingItem';
+import { Image } from 'expo-image';
 
-interface ShoppingItem {
+export interface ShoppingItemProps {
   id: string;
   user: string;
   email: string;
@@ -20,7 +21,7 @@ interface ShoppingItem {
 const Home = ({navigation}: any) => {
   const { user, logout } = useAuth();
   const [item, setItem] = useState("");
-  const [shoppingList, setShoppingList] = useState<ShoppingItem[]>([]);
+  const [shoppingList, setShoppingList] = useState<ShoppingItemProps[]>([]);
 
   useEffect(() => {
     if (user === null) {
@@ -82,10 +83,13 @@ const Home = ({navigation}: any) => {
 
       <FlatList 
         data={shoppingList}
-        renderItem={({ item }) => <ShoppingItem item={item} />}
+        renderItem={({ item }) => (
+          <ShoppingItem item={item}
+          isChecked={item.listItem.isChecked}
+          id={item.id}
+        />)}
         keyExtractor={(item) => item.id}
       />
-
 
       <TextInput
         value={item}

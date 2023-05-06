@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginTop: 'auto',
     marginBottom: 10
-  }
+  },
 })
 
 export default styles;

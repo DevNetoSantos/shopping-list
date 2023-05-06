@@ -1,18 +1,21 @@
 import { View, Text, Pressable } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
-
 const ShoppingItem = (props: any) => {
-  const { item } = props;
+  const { item } = props
+  const [isChecked,setIsChecked] = useState(item.isChecked);
 
   return (
     <View style={styles.container}>
       {/* checked icon */}
-      <Pressable>
-        <AntDesign name="checkcircleo" size={30} color="black" />
+      <Pressable onPress={() => setIsChecked(!isChecked)}>
+        {
+          isChecked ? <AntDesign name="checkcircle" size={24} color="black" /> :
+          <AntDesign name="checkcircleo" size={30} color="black" />
+        }
       </Pressable>
       {/* shopping text */}
       <Text style={styles.textItems}>{item.listItem.item}</Text>
