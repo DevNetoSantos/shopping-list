@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, SafeAreaView } from 'react-native'
 import { useAuth } from '../../ContextApi/authProvider';
+import ShoppingItem from '../../components/ShoppingItem';
+import styles from './styles';
 
 const Home = ({navigation}: any) => {
   const { user, logout } = useAuth();
@@ -12,11 +14,9 @@ const Home = ({navigation}: any) => {
   }, [user, navigation]);
 
   return (
-    <View>
-      <Text>Home</Text>
-      <Text>Olá, {user?.name}</Text>
-      <Button title='Logout' onPress={() => logout()}/>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ShoppingItem />
+    </SafeAreaView>
   )
 }
 
