@@ -23,8 +23,8 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  login: () => {},
-  logout: () => {},
+  login: () => { },
+  logout: () => { },
 });
 
 export const AuthProvider = ({ children }: any) => {
@@ -39,9 +39,9 @@ export const AuthProvider = ({ children }: any) => {
 
       const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
 
-      const {type, params} = await AuthSession.startAsync({ authUrl }) as authResponse;
-      
-      if(type === 'success') {
+      const { type, params } = await AuthSession.startAsync({ authUrl }) as authResponse;
+
+      if (type === 'success') {
         const response = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?all=json&access_token=${params.access_token}`);
         setUser(response.data);
       }

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../ContextApi/authProvider';
 
 
-export default function Login({navigation}: any) {
+export default function Login({ navigation }: any) {
   const { user, login } = useAuth();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function Login({navigation}: any) {
   return (
     <View>
       <Text>Login</Text>
-      <Button title='Fazer Login' onPress={() => login()}/>
+      <Button title='Fazer Login' onPress={() => login()} />
     </View>
   )
 }
