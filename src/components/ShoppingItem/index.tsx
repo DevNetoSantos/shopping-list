@@ -3,19 +3,24 @@ import React, { useEffect, useState } from 'react'
 import styles from './styles';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import  {doc, updateDoc, db} from '../../config/Firebase/index'
+import { doc, updateDoc, db, deleteDoc } from '../../config/Firebase/index'
 
 
 const ShoppingItem = (props: any) => {
-  const { item } = props
-  const [isChecked,setIsChecked] = useState(item.isChecked);
+  const { item, getShoppingList } = props
+  const [isChecked, setIsChecked] = useState(item.isChecked);
 
   const updateIsCheked = async () => {
     const shoppingRef = doc(db, "shopping", item.id);
 
     await updateDoc(shoppingRef, {
-        isChecked: isChecked
+      isChecked: isChecked
     });
+  }
+
+  const deleteShoppingItem = async () => {
+    await deleteDoc(doc(db, "shopping", item.id));
+    getShoppingList();
   }
 
   useEffect(() => {
@@ -28,13 +33,13 @@ const ShoppingItem = (props: any) => {
       <Pressable onPress={() => setIsChecked(!isChecked)}>
         {
           isChecked ? <AntDesign name="checkcircle" size={24} color="black" /> :
-          <AntDesign name="checkcircleo" size={30} color="black" />
+            <AntDesign name="checkcircleo" size={30} color="black" />
         }
       </Pressable>
       {/* shopping text */}
       <Text style={styles.textItems}>{item.listItem.item}</Text>
       {/* button delete items */}
-      <Pressable>
+      <Pressable onPress={deleteShoppingItem}>
         <MaterialIcons name="delete" size={30} color="black" />
       </Pressable>
     </View>

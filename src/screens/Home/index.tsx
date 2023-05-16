@@ -3,7 +3,7 @@ import { View, Text, Button, SafeAreaView, Pressable, TextInput, FlatList } from
 import { useAuth } from '../../ContextApi/authProvider';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from './styles';
-import  {addDoc, collection, db, getDocs} from '../../config/Firebase/index'
+import { addDoc, collection, db, getDocs } from '../../config/Firebase/index'
 import ShoppingItem from '../../components/ShoppingItem';
 import { Image } from 'expo-image';
 
@@ -18,7 +18,7 @@ export interface ShoppingItemProps {
   };
 }
 
-const Home = ({navigation}: any) => {
+const Home = ({ navigation }: any) => {
   const { user, logout } = useAuth();
   const [item, setItem] = useState("");
   const [shoppingList, setShoppingList] = useState<ShoppingItemProps[]>([]);
@@ -81,13 +81,15 @@ const Home = ({navigation}: any) => {
         </Pressable>
       </View>
 
-      <FlatList 
+      <FlatList
         data={shoppingList}
         renderItem={({ item }) => (
           <ShoppingItem item={item}
-          isChecked={item.listItem.isChecked}
-          id={item.id}
-        />)}
+            isChecked={item.listItem.isChecked}
+            id={item.id}
+            getShoppingList={getShoppingList}
+
+          />)}
         keyExtractor={(item) => item.id}
       />
 
