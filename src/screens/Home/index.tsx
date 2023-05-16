@@ -3,7 +3,7 @@ import { View, Text, Button, SafeAreaView, Pressable, TextInput, FlatList } from
 import { useAuth } from '../../ContextApi/authProvider';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from './styles';
-import { addDoc, collection, db, getDocs } from '../../config/Firebase/index'
+import { addDoc, collection, db, getDocs, doc, deleteDoc } from '../../config/Firebase/index'
 import ShoppingItem from '../../components/ShoppingItem';
 import { Image } from 'expo-image';
 
@@ -64,6 +64,12 @@ const Home = ({ navigation }: any) => {
     }
   };
 
+  const deleteAllShoppingList = async () => {
+    const querySnapshot = await getDocs(collection(db, "shopping"));
+    querySnapshot.docs.map((item) => deleteDoc(doc(db, "shopping", item.id)));
+    getShoppingList();
+  }
+
   useEffect(() => {
     getShoppingList();
   }, [])
@@ -76,7 +82,7 @@ const Home = ({ navigation }: any) => {
         {/* numberItems */}
         <Text style={styles.numberItems}>3</Text>
         {/* delete items */}
-        <Pressable>
+        <Pressable onPress={deleteAllShoppingList}>
           <MaterialIcons name="delete" size={30} color="black" />
         </Pressable>
       </View>
