@@ -20,7 +20,7 @@ export interface ShoppingItemProps {
 
 const Home = ({ navigation }: any) => {
   const { user, logout } = useAuth();
-  const [item, setItem] = useState("");
+  const [item, setItem] = useState('');
   const [shoppingList, setShoppingList] = useState<ShoppingItemProps[]>([]);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const Home = ({ navigation }: any) => {
           isChecked: false
         }
       });
-      setItem("");
+      setItem('');
       getShoppingList();
       //console.log("Document written with ID: ", docRef.id);
     } catch (e) {

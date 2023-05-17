@@ -8,7 +8,7 @@ import { doc, updateDoc, db, deleteDoc } from '../../config/Firebase/index'
 
 const ShoppingItem = (props: any) => {
   const { item, getShoppingList } = props
-  const [isChecked, setIsChecked] = useState(item.isChecked);
+  const [isChecked, setIsChecked] = useState(item.listItem.isChecked);
 
   const updateIsCheked = async () => {
     const shoppingRef = doc(db, "shopping", item.id);
@@ -24,8 +24,11 @@ const ShoppingItem = (props: any) => {
   }
 
   useEffect(() => {
-    updateIsCheked();
-  }, [isChecked])
+    // Verifica se o item é uma string válida antes de atualizar o estado isChecked
+    if (typeof item.listItem.isChecked === 'boolean') {
+      setIsChecked(item.listItem.isChecked);
+    }
+  }, [item.listItem.isChecked]);
 
   return (
     <View style={styles.container}>
