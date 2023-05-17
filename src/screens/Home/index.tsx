@@ -3,20 +3,26 @@ import { View, Text, Button, SafeAreaView, Pressable, TextInput, FlatList } from
 import { useAuth } from '../../ContextApi/authProvider';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from './styles';
-import { addDoc, collection, db, getDocs, doc, deleteDoc } from '../../config/Firebase/index'
+import { addDoc, collection, db, getDocs, setDoc, getDoc, doc, deleteDoc } from '../../config/Firebase/index'
 import ShoppingItem from '../../components/ShoppingItem';
 import { Image } from 'react-native';
+import { query, where } from 'firebase/firestore';
 
 export interface ShoppingItemProps {
   id: string;
-  user: string;
-  email: string;
-  photo: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    photo: string;
+  };
   listItem: {
     item: string;
     isChecked: boolean;
   };
 }
+
+
 
 const Home = ({ navigation }: any) => {
   const { user, logout } = useAuth();
@@ -31,27 +37,50 @@ const Home = ({ navigation }: any) => {
 
   const addItem = async () => {
     try {
-      const docRef = await addDoc(collection(db, "shopping"), {
-        user: user?.name,
-        email: user?.email,
-        photo: user?.picture,
+      const userId = user?.id ?? '';  // Obtém o ID do usuário autenticado
+      const userRef = doc(db, "users", userId); // Referência ao documento do usuário
+
+      // Verifica se o documento do usuário já existe
+      const userSnapshot = await getDoc(userRef);
+      if (!userSnapshot.exists()) {
+        // Cria o documento do usuário se ainda não existir
+        await setDoc(userRef, {
+          name: user?.name,
+          email: user?.email,
+          photo: user?.picture
+          // outros campos de dados do usuário
+        });
+      }
+
+      // Cria um novo item na coleção "shopping"
+      const itemRef = await addDoc(collection(db, "shopping"), {
+        user: userRef,
         listItem: {
           item: item,
           isChecked: false
         }
       });
+
       setItem('');
       getShoppingList();
-      //console.log("Document written with ID: ", docRef.id);
+      // console.log("Document written with ID: ", itemRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-  }
+  };
+
 
   const getShoppingList = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, "shopping"));
-      const shoppingListData: any = [];
+      const userId = user?.id ?? ''; // Obtém o ID do usuário autenticado
+      const shoppingRef = collection(db, "shopping");
+
+      // Cria uma consulta para filtrar os documentos com base no usuário
+      const querySnapshot = await getDocs(
+        query(shoppingRef, where("user", "==", doc(db, "users", userId)))
+      );
+
+      const shoppingListData: any[] = [];
       querySnapshot.forEach((doc) => {
         shoppingListData.push({
           ...doc.data(),
@@ -64,11 +93,26 @@ const Home = ({ navigation }: any) => {
     }
   };
 
+
   const deleteAllShoppingList = async () => {
-    const querySnapshot = await getDocs(collection(db, "shopping"));
-    querySnapshot.docs.map((item) => deleteDoc(doc(db, "shopping", item.id)));
-    getShoppingList();
-  }
+    try {
+      const userId = user?.id ?? ''; // Obtém o ID do usuário autenticado
+      const userRef = doc(db, "users", userId); // Referência ao documento do usuário
+
+      const querySnapshot = await getDocs(
+        query(collection(db, "shopping"), where("user", "==", userRef))
+      );
+
+      const deletePromises = querySnapshot.docs.map((doc) =>
+        deleteDoc(doc.ref)
+      );
+
+      await Promise.all(deletePromises);
+      getShoppingList();
+    } catch (error) {
+      console.log("Error deleting shopping list: ", error);
+    }
+  };
 
   useEffect(() => {
     getShoppingList();
