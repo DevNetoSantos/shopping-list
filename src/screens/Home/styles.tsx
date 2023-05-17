@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     marginTop: 50,
     backgroundColor: '#fff'
   },
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   titleText: {
-    flex: 1,
-    fontSize: 30
+    fontSize: 30,
+    marginRight: 10
   },
   numberItems: {
     fontSize: 30,
@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     marginBottom: 10
   },
+  imageProfile: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+    borderRadius: 50
+  }
 })
 
 export default styles;

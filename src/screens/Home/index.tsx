@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import styles from './styles';
 import { addDoc, collection, db, getDocs, doc, deleteDoc } from '../../config/Firebase/index'
 import ShoppingItem from '../../components/ShoppingItem';
-import { Image } from 'expo-image';
+import { Image } from 'react-native';
 
 export interface ShoppingItemProps {
   id: string;
@@ -77,6 +77,12 @@ const Home = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
+
+        {/* imagem profile */}
+        <Image
+          style={styles.imageProfile}
+          source={{ uri: user?.picture }}
+        />
         {/* Text Title */}
         <Text style={styles.titleText}>Lista de Compras</Text>
         {/* numberItems */}
