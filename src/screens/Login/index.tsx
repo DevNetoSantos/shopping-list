@@ -1,6 +1,7 @@
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, Image, Animated } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../ContextApi/authProvider';
+import styles from './styles';
 
 
 export default function Login({ navigation }: any) {
@@ -12,11 +13,17 @@ export default function Login({ navigation }: any) {
     }
   }, [user, navigation]);
 
-
   return (
-    <View>
-      <Text>Login</Text>
-      <Button title='Fazer Login' onPress={() => login()} />
+    <View style={styles.container}>
+      <View style={styles.contentLogo}>
+        <Image
+          style={styles.imageLogo}
+          source={require('../../../assets/icon.png')}
+        />
+      </View>
+      <View style={styles.containerButton}>
+        <Button color={"red"} title='Login com google' onPress={() => login()} />
+      </View>
     </View>
   )
 }
