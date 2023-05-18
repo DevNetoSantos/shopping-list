@@ -17,7 +17,7 @@
 ## Stay in touch
 
 - Author - [santosneto_](https://www.instagram.com/santosneto_/)
-- Website - [https://devnetosantos.vercel.app/](https://devnetosantos.vercel.app/)
+- Website - [https://devnetosantos.com.br/](https://devnetosantos.com.br/)
 - Twitter - [@santosneto_](https://twitter.com/santosneto_)
 
 ## License
