@@ -130,7 +130,7 @@ const Home = ({ navigation }: any) => {
         {/* Text Title */}
         <Text style={styles.titleText}>Lista de Compras</Text>
         {/* numberItems */}
-        <Text style={styles.numberItems}>3</Text>
+        <Text style={styles.numberItems}>{shoppingList.length}</Text>
         {/* delete items */}
         <Pressable onPress={deleteAllShoppingList}>
           <MaterialIcons name="delete" size={30} color="black" />

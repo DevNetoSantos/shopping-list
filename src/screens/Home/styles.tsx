@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 10,
     alignItems: 'center',
-    width: '90%',
     alignSelf: 'center',
     borderRadius: 10,
     marginBottom: 10

@@ -10,18 +10,40 @@ const ShoppingItem = (props: any) => {
   const { item, getShoppingList } = props
   const [isChecked, setIsChecked] = useState(item.listItem.isChecked);
 
-  const updateIsCheked = async () => {
-    const shoppingRef = doc(db, "shopping", item.id);
+  const updateIsCheked = async (updatedIsChecked: boolean) => {
+    const userId = item.user?.id ?? '';
 
-    await updateDoc(shoppingRef, {
-      isChecked: isChecked
-    });
-  }
+    if (item.user.id === userId) {
+      const shoppingRef = doc(db, "shopping", item.id);
+
+      await updateDoc(shoppingRef, {
+        listItem: {
+          ...item.listItem,
+          isChecked: updatedIsChecked
+        }
+      });
+    }
+  };
+
 
   const deleteShoppingItem = async () => {
-    await deleteDoc(doc(db, "shopping", item.id));
-    getShoppingList();
+    const userId = item.user?.id ?? '';
+
+    if (item.user.id === userId) {
+      await deleteDoc(doc(db, "shopping", item.id));
+      getShoppingList();
+    }
   }
+
+  const handleToggleChecked = async () => {
+    const updatedIsChecked = !isChecked; // Inverte o valor de isChecked
+
+    setIsChecked(updatedIsChecked); // Atualiza o estado isChecked
+
+    await updateIsCheked(updatedIsChecked); // Chama a função updateIsCheked com o valor atualizado
+  };
+
+
 
   useEffect(() => {
     // Verifica se o item é uma string válida antes de atualizar o estado isChecked
@@ -33,7 +55,7 @@ const ShoppingItem = (props: any) => {
   return (
     <View style={styles.container}>
       {/* checked icon */}
-      <Pressable onPress={() => setIsChecked(!isChecked)}>
+      <Pressable onPress={handleToggleChecked}>
         {
           isChecked ? <AntDesign name="checkcircle" size={24} color="black" /> :
             <AntDesign name="checkcircleo" size={30} color="black" />
