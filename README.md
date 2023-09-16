@@ -9,10 +9,7 @@
 - Outh - google
 
 # Image project
-
-![WhatsApp Image 2023-05-18 at 13 57 01](https://github.com/DevNetoSantos/SALES-MANAGEMENT-FRONTEND/assets/89228679/007c0dcc-df31-4b3d-88b2-1235439d674a)
-![WhatsApp Image 2023-05-18 at 13 57 10](https://github.com/DevNetoSantos/SALES-MANAGEMENT-FRONTEND/assets/89228679/b95770d4-e2b7-4919-96f6-60b832eef8cc)
-![WhatsApp Image 2023-05-18 at 13 57 32](https://github.com/DevNetoSantos/SALES-MANAGEMENT-FRONTEND/assets/89228679/7c4cd08e-b569-4ecf-98d7-3ef7b95d83ba)
+![Design sem nome (1)](https://github.com/DevNetoSantos/shopping-list/assets/89228679/dc1ec0f8-9c74-49c2-ab81-c95fa1fd49c7)
 
 ## Stay in touch
 
